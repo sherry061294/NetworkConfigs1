@@ -1,0 +1,38 @@
+enable 
+configure terminal
+int loop 2
+ip address 10.0.0.5 255.255.255.224
+exit
+
+int loop 3
+ip address 20.0.0.70 255.255.255.224
+exit
+
+int serial 2/0
+ip addr 30.0.0.194 255.255.255.252
+no shutdown
+exit
+
+int serial 3/0
+ip addr 30.0.0.197 255.255.255.252
+no shutdown
+exit
+
+router eigrp 10
+no auto-summary
+network 10.0.0.0 0.0.0.31
+network 30.0.0.192 0.0.0.3
+exit
+
+router eigrp 20
+no auto-summary
+network 20.0.0.64 0.0.0.31
+network 30.0.0.196 0.0.0.3
+exit
+
+show ip protocols
+
+NOTES:
+The result from these set of operations should be 4 Interfaces (two loopback and two serial interfaces) and four networks advertised by the EIGRP.
+The number ahead of the Eigrp protocol represents the Autonomous Systems.
+We use no auto-summary so that we may used CIDR. show IP protocols on this router should have Only EIGRP related information.

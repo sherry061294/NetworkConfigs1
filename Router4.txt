@@ -1,0 +1,22 @@
+enable
+configure terminal
+int loop 6
+ip addr 30.0.0.140 255.255.255.192
+exit
+
+int serial 2/0
+ip addr 30.0.0.202 255.255.255.252
+no shutdown
+exit
+
+router Eigrp 30
+network 30.0.0.128 0.0.0.127
+network 30.0.0.200 0.0.0.3
+exit
+
+
+NOTES:
+The result from these set of operations should be 2 Interfaces (one loopback and the other a serial interface) and two networks advertised by the EIGRP.
+We use no auto-summary so that we may used CIDR. show IP protocols on this router should have Only EIGRP related information.
+
+

@@ -1,0 +1,26 @@
+enable
+config terminal
+interface loopback 1 
+ip address 10.0.0.40 255.255.255.240
+Exit
+
+interface serial 2/0
+ip address 30.0.0.193 255.255.255.252
+no shutdown
+exit
+
+router eigrp 10
+No auto-summary
+network 10.0.0.32 0.0.0.15
+network 30.0.0.192 0.0.0.3
+exit
+exit
+
+show ip protocols
+
+
+NOTES:
+The result from these set of operations should be 2 Interfaces (one loopback and the other a serial interface) and two networks advertised by the EIGRP.
+We use no auto-summary so that we may used CIDR. show IP protocols on this router should have Only EIGRP related information.
+
+
